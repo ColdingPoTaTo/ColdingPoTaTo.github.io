@@ -1,14 +1,17 @@
 .mw-900px {
     width: 900px;
+    margin: auto;
+    padding-left: 2rem;
+    padding-right: 2rem;
 }
 .headPhoto {
     width: 150px;
-    height: 150px;
+    height: auto;
     margin-left: 20px;
 }
 .projectPhoto {
     width: 200px;
-    height: 200px;
+    height: auto;
 }
 .w-150px {
     width: 160px;
