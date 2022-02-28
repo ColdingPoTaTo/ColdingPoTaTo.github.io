@@ -10,7 +10,7 @@
     margin-left: 20px;
 }
 .projectPhoto {
-    width: 200px;
+    width: 160px;
     height: auto;
 }
 .w-150px {
@@ -24,4 +24,8 @@
 }
 .lineGap-05 {
     margin-bottom: 0.5rem;
+}
+
+u {
+    font-weight: bold;
 }
