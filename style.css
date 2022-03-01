@@ -24,8 +24,8 @@ hr {
     position: relative;
 }
 .projectPhoto {
-    max-height: 100%;
-    max-width: 100%;
+    max-height: 80%;
+    max-width: 80%;
     width: auto;
     height: auto;
     position: absolute;
@@ -39,8 +39,8 @@ hr {
     width: 160px;
 }
 .blockquote {
-    font-size: 1.25em;
-    margin: 1em 0;
+    font-size: 1em;
+    margin: 0.3em 0;
     padding-left: 1em;
     border-left: 3px solid rgb(55, 53, 47);
 }
@@ -50,4 +50,7 @@ hr {
 
 u {
     font-weight: bold;
+}
+.indentLine {
+    text-indent: 2rem;
 }
