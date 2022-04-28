@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
+            crossorigin="anonymous"
+        />
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
+            crossorigin="anonymous"
+        ></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <style></style>
+        <title>Bootstrap5 & jQuery3.6</title>
+    </head>
+    <body class="p-1" style="background-image: url('./cardImgs/dark_wood_texture.jpg')">
+        <div class="container p-2 container-lg" style="background-color: white; max-width: 540px">
+            <div class="row mb-3">
+                <img src="./cardImgs/2012_06_29_20_41_39.jpg" alt="一張圖片" style="width: 100%" />
+                <img src="./cardImgs/C.gif" alt="一張圖片" style="width: 100%" />
+            </div>
+
+            <h3>刮刮卡線上訂購</h3>
+            <form action="" class="p-3 my-3" style="border: 1px solid black; width: 100%">
+                <table>
+                    <tr>
+                        <td><label for="Name">收件人姓名*</label></td>
+                        <td><input type="text" id="Name" /></td>
+                    </tr>
+                    <tr>
+                        <td><label for="Phone">行動電話*</label></td>
+                        <td><input type="text" id="Phone" /></td>
+                    </tr>
+                    <tr>
+                        <td><label for="Email">Email*</label></td>
+                        <td><input type="text" id="Email" /></td>
+                    </tr>
+                </table>
+            </form>
+            <div class="p-3 my-3" style="border: 1px solid black; width: 100%">
+                <h4>刮刮卡內容</h4>
+                <!-- 商品內容 -->
+                <div id="ordderList"></div>
+                <button class="mt-2 btn btn-sm btn-secondary" id="addCard"><img src="./cardImgs/plus.png" alt="" /> 新增一張卡片</button>
+            </div>
+            <!-- 統計數量與金額 -->
+            <div class="my-3">
+                <table class="table" id="summaryTable">
+                    <thead>
+                        <tr>
+                            <td>項目</td>
+                            <td>數量</td>
+                            <td>單價</td>
+                            <td>總計</td>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+            <div class="my-3">
+                <div>如有問題可以在這邊留言通知呦</div>
+                <textarea name="" id="" cols="30" rows="5"></textarea>
+            </div>
+            <div class="my-3 p-2" style="background-color: #eeeeee; font-size: 0.8rem">
+                <p>付款方式:超商取貨付款<img src="./cardImgs/conv.jpg" alt="" /></p>
+                <p>可選擇全家 / OK / 萊爾富便利商店 取貨付款</p>
+                <p>4~5日內會寄送至指定門市(周六日不算工作天)</p>
+                <p>送達指定門市時會以系統發出的郵件/簡訊通知取件</p>
+            </div>
+            <button class="btn btn-secondary" id="btnNext">下一步</button>
+        </div>
+
+        <script>
+            $(function () {
+                var cardCount = 1;
+                var cards = [];
+                const goods = ["錢滾錢", "愛情御守", "歡樂水果盤", "雀神大賽", "浪漫情人節", "88一路發", "聖誕快樂", "恭賀新禧"];
+                addNewCard();
+                addToArray(cardCount);
+                summaryToTable();
+                $("#addCard").click(function () {
+                    cardCount += 1;
+                    addNewCard();
+                    addToArray(cardCount);
+                    summaryToTable();
+                });
+                //新增卡片
+                function addNewCard() {
+                    if (cardCount > 1) {
+                        $("#ordderList").append(`<hr>`);
+                    }
+                    $("#ordderList").append(`
+                    <div id="card${cardCount}">
+                        <label>第${cardCount}張款式:</label>
+                        <select class="" name="" id="option${cardCount}">
+                        </select>
+                        <br />
+                        <div class="my-2">
+                            <span>單價: </span><span>200</span>
+                            <label class="mx-1" for="">數量</label>
+                            <input type="number" id="amount${cardCount}" value="11" style="width:3rem" />
+                        </div>
+                        <textarea name="" id="content${cardCount}" cols="30" rows="5" placeholder="刮刮卡內容"></textarea>
+                    </div>
+                    `);
+                    goods.forEach(function (item, i) {
+                        $("#option" + cardCount).append(`
+                        <option value="${item}">${item}</option>
+                        `);
+                    });
+                    $("#option" + cardCount).on("change", function () {
+                        updateCard(cardCount);
+                        summaryToTable();
+                    });
+                    $("#amount" + cardCount).on("change", function () {
+                        updateCard(cardCount);
+                        summaryToTable();
+                    });
+                    $("#content" + cardCount).on("focusout", function () {
+                        updateCard(cardCount);
+                    });
+                }
+
+                //新增刮刮卡物件
+                function addToArray(i) {
+                    card = {
+                        cardNo: i,
+                        type: $("#option" + i).val(),
+                        content: $("#content" + i).text(),
+                        price: 200,
+                        amount: $("#amount" + i).val(),
+                        sum: 200 * 1,
+                    };
+                    cards.push(card);
+                }
+                //更新刮刮卡物件內容
+                function updateCard(i) {
+                    cards[i - 1].type = $("#option" + i).val();
+                    cards[i - 1].content = $("#content" + i).text();
+                    cards[i - 1].amount = $("#amount" + i).val();
+                }
+                //統計金額
+                function summaryToTable() {
+                    var totalPrice = 0;
+                    $("#summaryTable tbody").html("");
+                    cards.forEach(function (item, i) {
+                        let theprice = item.amount * item.price;
+                        totalPrice += theprice;
+                        $("#summaryTable tbody").append(`
+                        <tr>
+                            <td>${item.type}</td>
+                            <td>${item.amount}</td>
+                            <td>${item.price}</td>
+                            <td>${theprice}</td>
+                        </tr>
+                        `);
+                    });
+                    totalPrice += 50;
+                    $("#summaryTable tbody").append(`
+                        <tr>
+                            <td colspan="3">郵資</td>
+                            <td>50</td>
+                        </tr>
+                        <tr class="table-light">
+                            <td colspan="3">總計</td>
+                            <td>${totalPrice}</td>
+                        </tr>
+                    `);
+                }
+                //按鈕-下一步
+                $("#btnNext").click(function () {
+                    alert("尚未完工^_^");
+                });
+            });
+        </script>
+    </body>
+</html>
