@@ -1,248 +1,272 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
-            rel="stylesheet"
-            integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
-            crossorigin="anonymous"
-        />
-        <script
-            src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
-            crossorigin="anonymous"
-        ></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css" />
-        <style>
-            .container {
-                background-color: #c2ded1;
-                color: #354259;
-                width: auto;
-                max-width: 768px;
-                height: 100vh;
-                max-height: 1024px;
-            }
-            .inputWindow {
-                font-size: 1.5rem;
-                text-align: center;
-                line-height: 3rem;
-                width: 3rem;
-                height: 3rem;
-                border-radius: 30%;
-                background-color: #ece5c7;
-            }
-            .numKeyboard div button {
-                font-size: 3vh;
-                text-align: center;
-                line-height: 8vh;
-                height: 8vh;
-                width: 8vh;
-                border-radius: 50%;
-                background-color: #cdc2ae;
-                color: #354259;
-            }
-            .numKeyboard div button:disabled {
-                background-color: #ece5c7;
-            }
-            .h-header,
-            .h-inputWindow {
-                min-height: 10vh;
-            }
-            .h-record {
-                height: 30vh;
-            }
-            .h-number {
-                height: 40vh;
-            }
-        </style>
-        <title>1A2B</title>
-    </head>
-    <body>
-        <div class="container">
-            <div class="row flex-column">
-                <div class="h-header">
-                    <h1 class="d-flex justify-content-center mt-3">Guessing Game</h1>
-                    <hr />
-                </div>
 
-                <!-- 玩家輸入的數字 -->
-                <div class="d-flex justify-content-center h-inputWindow" id="inputWindow">
-                    <div class="inputWindow m-2 text-center"></div>
-                    <div class="inputWindow m-2 text-center"></div>
-                    <div class="inputWindow m-2 text-center"></div>
-                    <div class="inputWindow m-2 text-center"></div>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
+        crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css" />
+    <style>
+        .container {
+            background-color: #c2ded1;
+            color: #354259;
+            width: auto;
+            max-width: 768px;
+            height: 100vh;
+            max-height: 1024px;
+        }
+
+        .inputWindow {
+            font-size: 1.5rem;
+            text-align: center;
+            line-height: 3rem;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 30%;
+            background-color: #ece5c7;
+        }
+
+        .numKeyboard div button {
+            font-size: 3vh;
+            text-align: center;
+            line-height: 8vh;
+            height: 8vh;
+            width: 8vh;
+            border-radius: 50%;
+            background-color: #cdc2ae;
+            color: #354259;
+        }
+
+        .numKeyboard div button:disabled {
+            background-color: #ece5c7;
+        }
+
+        .h-header,
+        .h-inputWindow {
+            min-height: 10vh;
+        }
+
+        .h-record {
+            height: 30vh;
+        }
+
+        .h-number {
+            height: 40vh;
+        }
+    </style>
+    <title>1A2B</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row flex-column">
+            <div class="h-header">
+                <h1 class="d-flex justify-content-center mt-3">Guessing Game</h1>
+                <hr />
+            </div>
+
+            <!-- 玩家輸入的數字 -->
+            <div class="d-flex justify-content-center h-inputWindow" id="inputWindow">
+                <div class="inputWindow m-2 text-center"></div>
+                <div class="inputWindow m-2 text-center"></div>
+                <div class="inputWindow m-2 text-center"></div>
+                <div class="inputWindow m-2 text-center"></div>
+            </div>
+            <!-- 紀錄 -->
+            <div class="record-area mb-auto flex-grow-1 h-record">
+                <div class="text-center w-100 border-1 h3" id="titleHistory"><u>History</u></div>
+                <div style="display: flex; flex-direction: column; flex-wrap: wrap; height: 25vh" id="history"></div>
+            </div>
+            <!-- 按鈕 -->
+            <div class="numKeyboard h-number" id="numKeyboard">
+                <div class="d-flex justify-content-around">
+                    <button class="my-1" name="numKey">1</button>
+                    <button class="my-1" name="numKey">2</button>
+                    <button class="my-1" name="numKey">3</button>
                 </div>
-                <!-- 紀錄 -->
-                <div class="record-area mb-auto flex-grow-1 h-record">
-                    <div class="text-center w-100 border-1 h3" id="titleHistory"><u>History</u></div>
-                    <div style="display: flex; flex-direction: column; flex-wrap: wrap; height: 25vh" id="history"></div>
+                <div class="d-flex justify-content-around">
+                    <button class="my-1" name="numKey">4</button>
+                    <button class="my-1" name="numKey">5</button>
+                    <button class="my-1" name="numKey">6</button>
                 </div>
-                <!-- 按鈕 -->
-                <div class="numKeyboard h-number" id="numKeyboard">
-                    <div class="d-flex justify-content-around">
-                        <button class="my-1" name="numKey">1</button>
-                        <button class="my-1" name="numKey">2</button>
-                        <button class="my-1" name="numKey">3</button>
-                    </div>
-                    <div class="d-flex justify-content-around">
-                        <button class="my-1" name="numKey">4</button>
-                        <button class="my-1" name="numKey">5</button>
-                        <button class="my-1" name="numKey">6</button>
-                    </div>
-                    <div class="d-flex justify-content-around">
-                        <button class="my-1" name="numKey">7</button>
-                        <button class="my-1" name="numKey">8</button>
-                        <button class="my-1" name="numKey">9</button>
-                    </div>
-                    <div class="d-flex justify-content-around">
-                        <button class="my-1" id="start"><i class="bi bi-play"></i></button>
-                        <button class="my-1" name="numKey">0</button>
-                        <button class="my-1" id="delete"><i class="bi bi-backspace"></i></button>
-                    </div>
+                <div class="d-flex justify-content-around">
+                    <button class="my-1" name="numKey">7</button>
+                    <button class="my-1" name="numKey">8</button>
+                    <button class="my-1" name="numKey">9</button>
                 </div>
-                <!-- Modal -->
-                <div class="modal fade" id="textModal" tabindex="-1">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="textModalTitle">Modal title</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                            </div>
-                            <div class="modal-body" id="textModalContent"></div>
+                <div class="d-flex justify-content-around">
+                    <button class="my-1" id="start"><i class="bi bi-play"></i></button>
+                    <button class="my-1" name="numKey">0</button>
+                    <button class="my-1" id="delete"><i class="bi bi-backspace"></i></button>
+                </div>
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="textModal" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="textModalTitle">Modal title</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
+                        <div class="modal-body" id="textModalContent"></div>
                     </div>
                 </div>
             </div>
         </div>
-        <script>
-            $(function () {
-                var ansArray = []; //題目
-                var history = []; //猜數字紀錄
-                var newGuess = []; //玩家猜的數字
-                var myModal = new bootstrap.Modal(document.getElementById("textModal"));
+    </div>
+    <script>
+        $(function () {
+            var ansArray = []; //題目
+            var history = []; //猜數字紀錄
+            var newGuess = []; //玩家猜的數字
+            var birthday = [0, 5, 2, 7]; //生日
+            var myModal = new bootstrap.Modal(document.getElementById("textModal"));
 
-                initail(); //初始化
+            initail(); //初始化
 
-                //玩家輸入數字
-                $("#numKeyboard button[name='numKey']").on("click", function () {
-                    $(this).prop("disabled", true);
-                    addNum(parseInt($(this).text()));
-                });
-                $("#start").click(function () {
-                    starNewGame();
-                });
-                $("#delete").click(function () {
-                    removeNum();
-                });
-                //--------------------------------------------------------------------取得題目
-                function getAnswer() {
-                    while (ansArray.length < 4) {
-                        let newNum = getRandom();
-                        if (!ansArray.includes(newNum)) {
-                            ansArray.push(newNum);
-                        }
-                    }
-                    console.log("解答 ", ansArray);
-                }
-                function getRandom(min = 0, max = 9) {
-                    return Math.floor(Math.random() * (max - min + 1)) + min;
-                }
-                //--------------------------------------------------------------------
-                function removeNum(params) {
-                    let thisNum = newGuess.pop();
-                    $("#numKeyboard button:disabled").each(function (i, item) {
-                        if ($(this).text() == thisNum) {
-                            $(this).prop("disabled", false);
-                        }
-                    });
-                    showNum();
-                }
-                function addNum(params) {
-                    newGuess.push(params);
-                    showNum();
-                    if (newGuess.length == 4) {
-                        $("#numKeyboard button:disabled").prop("disabled", false);
-                        checkAns();
+            //玩家輸入數字
+            $("#numKeyboard button[name='numKey']").on("click", function () {
+                $(this).prop("disabled", true);
+                addNum(parseInt($(this).text()));
+            });
+            $("#start").click(function () {
+                starNewGame();
+            });
+            $("#delete").click(function () {
+                removeNum();
+            });
+            //--------------------------------------------------------------------取得題目
+            function getAnswer() {
+                while (ansArray.length < 4) {
+                    let newNum = getRandom();
+                    if (!ansArray.includes(newNum)) {
+                        ansArray.push(newNum);
                     }
                 }
-                //將當前數字顯示在上方視窗
-                function showNum() {
-                    $("#inputWindow div").empty();
-                    $.each(newGuess, (i, x) => $("#inputWindow div").eq(i).text(x));
+                console.log("解答 ", ansArray);
+            }
+            function getRandom(min = 0, max = 9) {
+                return Math.floor(Math.random() * (max - min + 1)) + min;
+            }
+            //--------------------------------------------------------------------
+            function removeNum(params) {
+                let thisNum = newGuess.pop();
+                $("#numKeyboard button:disabled").each(function (i, item) {
+                    if ($(this).text() == thisNum) {
+                        $(this).prop("disabled", false);
+                    }
+                });
+                showNum();
+            }
+            function addNum(params) {
+                newGuess.push(params);
+                showNum();
+                if (newGuess.length == 4) {
+                    $("#numKeyboard button:disabled").prop("disabled", false);
+                    checkAns();
                 }
-                //顯示歷史紀錄
-                function showHistory() {
-                    $("#history").empty();
-                    console.log("check point history ", history);
-                    $.each(history, function (index, item) {
-                        let content = `
+            }
+            //將當前數字顯示在上方視窗
+            function showNum() {
+                $("#inputWindow div").empty();
+                $.each(newGuess, (i, x) => $("#inputWindow div").eq(i).text(x));
+                checkBirthday();
+            }
+            //顯示歷史紀錄
+            function showHistory() {
+                $("#history").empty();
+                console.log("check point history ", history);
+                $.each(history, function (index, item) {
+                    let content = `
                             <div><span class="mx-1">${index + 1}.</span><span class="mx-1">${item.numbers}</span><span class="mx-1">${item.result}</span></div>
                         `;
-                        $("#history").append(content);
-                    });
-                }
-                //比對答案
-                function checkAns() {
-                    let A = 0;
-                    let B = 0;
-                    let numbers = "";
-                    $.each(newGuess, function (index, value) {
-                        numbers += value;
-                        if (ansArray[index] == value) {
-                            A++;
-                        } else if (ansArray.includes(value)) {
-                            B++;
-                        }
-                    });
-                    let compare = {
-                        numbers: numbers,
-                        result: A + "A" + B + "B",
-                    };
-                    console.log("check result: ", compare);
-                    history.push(compare);
-                    showHistory();
-                    if (A == 4) {
-                        $("#textModalTitle").html("Congratulations!!");
-                        $("#textModalContent").html("You got the answer " + getAnsString());
-                        myModal.show();
-                    } else if (history.length >= 12) {
-                        $("#textModalTitle").html("Sorry la ~~");
-                        $("#textModalContent").html("You miss the answer " + getAnsString());
-                        myModal.show();
+                    $("#history").append(content);
+                });
+            }
+            //比對答案
+            function checkAns() {
+                let A = 0;
+                let B = 0;
+                let numbers = "";
+                $.each(newGuess, function (index, value) {
+                    numbers += value;
+                    if (ansArray[index] == value) {
+                        A++;
+                    } else if (ansArray.includes(value)) {
+                        B++;
                     }
-                    newGuess = [];
-                }
-                //答案字串
-                function getAnsString() {
-                    let ss = "";
-                    $.each(ansArray, (i, x) => (ss += x));
-                    return ss;
-                }
-                //開始新的一輪
-                function starNewGame() {
-                    ansArray = []; //題目
-                    history = []; //猜數字紀錄
-                    newGuess = []; //玩家猜的數字
-                    getAnswer(); //產生題目
-                    $("#history").html(``);
-                    $("button").prop("disabled", false);
-                    $("#titleHistory").show();
-                    showNum();
-                }
-                //初始化
-                function initail() {
+                });
+                let compare = {
+                    numbers: numbers,
+                    result: A + "A" + B + "B",
+                };
+                console.log("check result: ", compare);
+                history.push(compare);
+                showHistory();
+                if (A == 4) {
+                    $("#textModalTitle").html("Congratulations!!");
+                    $("#textModalContent").html("You got the answer " + getAnsString());
+                    myModal.show();
+                } else if (history.length >= 12) {
+                    $("#textModalTitle").html("Sorry la ~~");
+                    $("#textModalContent").html("You miss the answer " + getAnsString());
+                    myModal.show();
                     $("button").prop("disabled", true);
                     $("#start").prop("disabled", false);
-                    $("#history").html(`
+                }
+                newGuess = [];
+            }
+            //答案字串
+            function getAnsString() {
+                let ss = "";
+                $.each(ansArray, (i, x) => (ss += x));
+                return ss;
+            }
+            //開始新的一輪
+            function starNewGame() {
+                ansArray = []; //題目
+                history = []; //猜數字紀錄
+                newGuess = []; //玩家猜的數字
+                getAnswer(); //產生題目
+                $("#history").html(``);
+                $("button").prop("disabled", false);
+                $("#titleHistory").show();
+                showNum();
+            }
+            //初始化
+            function initail() {
+                $("button").prop("disabled", true);
+                $("#start").prop("disabled", false);
+                $("#history").html(`
                         <div class="text-center h2 my-4">Press <i class="bi bi-play"></i></div>
                         <div class="text-center h2">To Start Guessing!!</div>
                     `);
-                    $("#titleHistory").hide();
+                $("#titleHistory").hide();
+            }
+            //比對生日
+            function checkBirthday() {
+                if (newGuess.length == 4) {
+                    let isBirthday = true;
+                    $.each(newGuess, function (i, item) {
+                        if (isBirthday && birthday[i] == item) {
+                            isBirthday = true;
+                        } else {
+                            isBirthday = false;
+                        }
+                    })
+                    if (isBirthday) {
+                        let birthString = ["生", "日", "快", "樂"];
+                        $.each(birthString, (i, x) => $("#inputWindow div").eq(i).text(x));
+                    }
                 }
-            });
-        </script>
-    </body>
+            }
+        });
+    </script>
+</body>
+
 </html>
