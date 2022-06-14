@@ -25,6 +25,7 @@
                 height: 100vh;
                 max-height: 1024px;
             }
+
             .inputWindow {
                 font-size: 1.5rem;
                 text-align: center;
@@ -34,6 +35,7 @@
                 border-radius: 30%;
                 background-color: #ece5c7;
             }
+
             .numKeyboard div button {
                 font-size: 3vh;
                 text-align: center;
@@ -44,22 +46,27 @@
                 background-color: #cdc2ae;
                 color: #354259;
             }
+
             .numKeyboard div button:disabled {
                 background-color: #ece5c7;
             }
+
             .h-header,
             .h-inputWindow {
                 min-height: 10vh;
             }
+
             .h-record {
                 height: 30vh;
             }
+
             .h-number {
                 height: 40vh;
             }
         </style>
         <title>1A2B</title>
     </head>
+
     <body>
         <div class="container">
             <div class="row flex-column">
@@ -122,6 +129,7 @@
                 var ansArray = []; //題目
                 var history = []; //猜數字紀錄
                 var newGuess = []; //玩家猜的數字
+                var birthday = [0, 5, 2, 7]; //生日
                 var myModal = new bootstrap.Modal(document.getElementById("textModal"));
 
                 initail(); //初始化
@@ -172,6 +180,7 @@
                 function showNum() {
                     $("#inputWindow div").empty();
                     $.each(newGuess, (i, x) => $("#inputWindow div").eq(i).text(x));
+                    checkBirthday();
                 }
                 //顯示歷史紀錄
                 function showHistory() {
@@ -208,10 +217,14 @@
                         $("#textModalTitle").html("Congratulations!!");
                         $("#textModalContent").html("You got the answer " + getAnsString());
                         myModal.show();
+                        $("button").prop("disabled", true);
+                        $("#start").prop("disabled", false);
                     } else if (history.length >= 12) {
                         $("#textModalTitle").html("Sorry la ~~");
                         $("#textModalContent").html("You miss the answer " + getAnsString());
                         myModal.show();
+                        $("button").prop("disabled", true);
+                        $("#start").prop("disabled", false);
                     }
                     newGuess = [];
                 }
@@ -241,6 +254,23 @@
                         <div class="text-center h2">To Start Guessing!!</div>
                     `);
                     $("#titleHistory").hide();
+                }
+                //比對生日
+                function checkBirthday() {
+                    if (newGuess.length == 4) {
+                        let isBirthday = true;
+                        $.each(newGuess, function (i, item) {
+                            if (isBirthday && birthday[i] == item) {
+                                isBirthday = true;
+                            } else {
+                                isBirthday = false;
+                            }
+                        });
+                        if (isBirthday) {
+                            let birthString = ["生", "日", "快", "樂"];
+                            $.each(birthString, (i, x) => $("#inputWindow div").eq(i).text(x));
+                        }
+                    }
                 }
             });
         </script>
